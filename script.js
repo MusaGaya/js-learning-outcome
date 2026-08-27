@@ -1,398 +1,340 @@
-// ==========================================
-// DOM SELECTORS DEMO
-// ==========================================
 
-// Wait for DOM to be fully loaded
+
 document.addEventListener('DOMContentLoaded', function() {
 
-    // Get references to DOM elements
-    var boxContainer = document.getElementById('boxContainer');
-    var selectorMessage = document.getElementById('selectorMessage');
+    console.log('✅ JavaScript loaded successfully');
+
+    // ==========================================
+    // DEMONSTRATE DOM SELECTORS
+    // ==========================================
     
-    // Only run if the DOM selector elements exist (they're in the new HTML)
-    if (boxContainer) {
+    // 1. getElementById - Select elements by ID
+    console.log('=== DOM SELECTORS DEMO ===');
+    
+    // Using getElementById
+    var headerElement = document.getElementById('variables');
+    console.log('1. getElementById("variables"):', headerElement);
+    
+    // Using querySelector - selects first matching element
+    var firstSection = document.querySelector('section');
+    console.log('2. querySelector("section"):', firstSection);
+    
+    // Using querySelectorAll - selects all matching elements
+    var allSections = document.querySelectorAll('section');
+    console.log('3. querySelectorAll("section"):', allSections.length + ' sections found');
+    
+    // Using querySelector with class selector
+    var mainContent = document.querySelector('.interactive-demo');
+    console.log('4. querySelector(".interactive-demo"):', mainContent);
+    
+    // ==========================================
+    // DEMONSTRATE DOM EVENTS
+    // ==========================================
+    
+    console.log('=== DOM EVENTS DEMO ===');
+    
+    // Find all buttons in the page
+    var allButtons = document.querySelectorAll('button');
+    console.log('Found ' + allButtons.length + ' buttons on the page');
+    
+    // Add event listeners to existing buttons
+    var buttons = document.querySelectorAll('button');
+    var clickCounter = 0;
+    var counterDisplay = document.createElement('p');
+    counterDisplay.style.marginTop = '10px';
+    counterDisplay.style.fontWeight = 'bold';
+    counterDisplay.style.color = '#2563eb';
+    counterDisplay.textContent = 'Button clicks: 0';
+    
+    // Find the functions section to add our counter
+    var functionsSection = document.querySelector('section:nth-child(7)');
+    if (functionsSection) {
+        functionsSection.appendChild(counterDisplay);
+    }
+    
+    // Add click events to all buttons
+    for (var i = 0; i < buttons.length; i++) {
+        (function(buttonIndex) {
+            buttons[buttonIndex].addEventListener('click', function(e) {
+                clickCounter++;
+                counterDisplay.textContent = 'Button clicks: ' + clickCounter;
+                
+                // Show which button was clicked
+                var buttonText = this.textContent.trim() || 'Button ' + (buttonIndex + 1);
+                console.log('🖱️ Clicked: "' + buttonText + '" - Total clicks: ' + clickCounter);
+                
+                // Add visual feedback
+                this.style.transform = 'scale(0.95)';
+                setTimeout(function() {
+                    buttons[buttonIndex].style.transform = 'scale(1)';
+                }, 150);
+            });
+        })(i);
+    }
+    
+    // Demonstrate event removal and re-addition
+    // Find the first button to demonstrate
+    var firstButton = document.querySelector('button');
+    if (firstButton) {
+        console.log('Demonstrating event removal on first button');
         
-        // Helper: Clear all selections
-        function clearSelections() {
-            var allBoxes = document.querySelectorAll('.box');
-            for (var i = 0; i < allBoxes.length; i++) {
-                allBoxes[i].classList.remove('selected', 'special-selected');
-            }
+        // Function to handle click
+        function specialClickHandler() {
+            alert('🎯 This button had a special event listener!');
         }
-
-        // Helper: Log message to selector log
-        function logSelectorMessage(message) {
-            selectorMessage.textContent = message;
-        }
-
-        // Select all boxes using querySelectorAll
-        document.getElementById('selectAllBtn').addEventListener('click', function() {
-            clearSelections();
-            var allBoxes = document.querySelectorAll('.box');
-            for (var i = 0; i < allBoxes.length; i++) {
-                allBoxes[i].classList.add('selected');
-            }
-            logSelectorMessage('✅ Selected ' + allBoxes.length + ' boxes using querySelectorAll(".box")');
-        });
-
-        // Select special boxes using querySelectorAll
-        document.getElementById('selectSpecialBtn').addEventListener('click', function() {
-            clearSelections();
-            var specialBoxes = document.querySelectorAll('.special');
-            for (var i = 0; i < specialBoxes.length; i++) {
-                specialBoxes[i].classList.add('special-selected');
-            }
-            logSelectorMessage('✨ Selected ' + specialBoxes.length + ' special boxes using querySelectorAll(".special")');
-        });
-
-        // Select first box using querySelector
-        document.getElementById('selectFirstBtn').addEventListener('click', function() {
-            clearSelections();
-            var firstBox = document.querySelector('.box');
-            if (firstBox) {
-                firstBox.classList.add('selected');
-                logSelectorMessage('🔹 Selected first box using querySelector(".box"): "' + firstBox.textContent + '"');
-            }
-        });
-
-        // Clear selections
-        document.getElementById('clearSelectionBtn').addEventListener('click', function() {
-            clearSelections();
-            logSelectorMessage('🧹 Selections cleared');
-        });
-    }
-
-    // ==========================================
-    // DOM EVENTS & CALLBACKS DEMO
-    // ==========================================
-
-    var clickBtn = document.getElementById('clickBtn');
-    var clickCounter = document.getElementById('clickCounter');
-    var eventStatus = document.getElementById('eventStatus');
-    var eventMessage = document.getElementById('eventMessage');
-
-    if (clickBtn) {
-        var clickCount = 0;
-
-        // Callback function for click event
-        function handleClick() {
-            clickCount++;
-            clickCounter.textContent = clickCount;
-            logEventMessage('🖱️ Button clicked! Count: ' + clickCount);
-            
-            // Visual feedback
-            clickBtn.style.transform = 'scale(0.95)';
-            setTimeout(function() {
-                clickBtn.style.transform = '';
-            }, 150);
-        }
-
-        // Log helper for events
-        function logEventMessage(message) {
-            if (eventMessage) {
-                eventMessage.textContent = message;
-            }
-        }
-
-        // Attach click event
-        clickBtn.addEventListener('click', handleClick);
-        if (eventMessage) logEventMessage('✅ Click event active');
-
-        // Reset counter
-        var resetBtn = document.getElementById('resetCounterBtn');
-        if (resetBtn) {
-            resetBtn.addEventListener('click', function() {
-                clickCount = 0;
-                clickCounter.textContent = '0';
-                logEventMessage('🔄 Counter reset to 0');
-            });
-        }
-
-        // Change background color (callback as anonymous function)
-        var colorBtn = document.getElementById('colorBtn');
-        if (colorBtn) {
-            colorBtn.addEventListener('click', function() {
-                var colors = ['#dbeafe', '#fce7f3', '#d1fae5', '#fef3c7', '#ede9fe', '#fecaca'];
-                var randomColor = colors[Math.floor(Math.random() * colors.length)];
-                var mainElement = document.querySelector('main');
-                if (mainElement) {
-                    mainElement.style.backgroundColor = randomColor;
-                }
-                logEventMessage('🎨 Background color changed to ' + randomColor);
-            });
-        }
-
-        // Remove event listener
-        var removeEventBtn = document.getElementById('removeEventBtn');
-        if (removeEventBtn) {
-            removeEventBtn.addEventListener('click', function() {
-                clickBtn.removeEventListener('click', handleClick);
-                if (eventStatus) {
-                    eventStatus.textContent = 'Inactive ❌';
-                    eventStatus.style.color = '#dc2626';
-                }
-                logEventMessage('⛔ Click event REMOVED - button no longer responds');
-            });
-        }
-
-        // Re-add event listener
-        var addEventBtn = document.getElementById('addEventBtn');
-        if (addEventBtn) {
-            addEventBtn.addEventListener('click', function() {
-                clickBtn.removeEventListener('click', handleClick);
-                clickBtn.addEventListener('click', handleClick);
-                if (eventStatus) {
-                    eventStatus.textContent = 'Active ✅';
-                    eventStatus.style.color = '#16a34a';
-                }
-                logEventMessage('✅ Click event RE-ADDED - button is active again');
-            });
-        }
-    }
-
-    // ==========================================
-    // CALLBACK FUNCTIONS DEMO
-    // ==========================================
-
-    var callbackInput = document.getElementById('callbackInput');
-    var callbackOutput = document.getElementById('callbackOutput');
-    var callbackBtn = document.getElementById('callbackBtn');
-
-    if (callbackInput && callbackBtn) {
         
-        // Callback function that processes input
-        function processTextInput(input) {
-            if (!input || input.trim() === '') {
-                return '⚠️ Please enter some text';
-            }
-            
-            var trimmed = input.trim();
-            var upper = trimmed.toUpperCase();
-            var reversed = trimmed.split('').reverse().join('');
-            var wordCount = trimmed.split(/\s+/).length;
-            
-            return '📝 "' + trimmed + '" → UPPER: ' + upper + ' | Reversed: ' + reversed + ' | Words: ' + wordCount;
-        }
-
-        // Higher-order function that executes a callback
-        function executeCallback(callbackFn) {
-            var input = callbackInput.value;
-            var result = callbackFn(input);
-            if (callbackOutput) {
-                callbackOutput.textContent = result;
-            }
-            logEventMessage('🔄 Callback executed with input: "' + (input || '(empty)') + '"');
-            return result;
-        }
-
-        // Handle callback execution
-        function handleCallbackExecution() {
-            executeCallback(processTextInput);
-        }
-
-        // Button click event with callback
-        callbackBtn.addEventListener('click', handleCallbackExecution);
-
-        // Enter key event with callback
-        callbackInput.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                handleCallbackExecution();
-            }
-        });
+        // Add special event
+        firstButton.addEventListener('click', specialClickHandler);
+        
+        // Remove after 3 seconds (demonstration)
+        setTimeout(function() {
+            firstButton.removeEventListener('click', specialClickHandler);
+            console.log('⛔ Special event removed from first button');
+        }, 3000);
+        
+        // Re-add after 6 seconds (demonstration)
+        setTimeout(function() {
+            firstButton.addEventListener('click', specialClickHandler);
+            console.log('✅ Special event re-added to first button');
+        }, 6000);
     }
-
+    
     // ==========================================
-    // ORIGINAL CODE (Preserved and working)
+    // DEMONSTRATE CALLBACK FUNCTIONS
     // ==========================================
-
-    // ==========================
-    // VARIABLES
-    // ==========================
-
-    var variablesDiv = document.getElementById("variables");
-    if (variablesDiv) {
-        var studentName = "Musa";
-        var internship = "SIWES";
-        var completedWeeks = 5;
-
-        variablesDiv.innerHTML = 
-            '<p><strong>Name:</strong> ' + studentName + '</p>' +
-            '<p><strong>Programme:</strong> ' + internship + '</p>' +
-            '<p><strong>Completed Weeks:</strong> ' + completedWeeks + '</p>';
-    }
-
-    // ==========================
-    // NUMBERS
-    // ==========================
-
-    var numbersDiv = document.getElementById("numbers");
-    if (numbersDiv) {
-        var score1 = 85;
-        var score2 = 90;
-        var average = (score1 + score2) / 2;
-
-        numbersDiv.innerHTML = 
-            '<p><strong>Score One:</strong> ' + score1 + '</p>' +
-            '<p><strong>Score Two:</strong> ' + score2 + '</p>' +
-            '<p><strong>Average Score:</strong> ' + average + '</p>';
-    }
-
-    // ==========================
-    // STRINGS
-    // ==========================
-
-    var stringsDiv = document.getElementById("strings");
-    if (stringsDiv) {
-        var firstName = "Musa";
-        var lastName = "Gaya";
-        var fullName = firstName + " " + lastName;
-
-        stringsDiv.innerHTML = 
-            '<p><strong>First Name:</strong> ' + firstName + '</p>' +
-            '<p><strong>Last Name:</strong> ' + lastName + '</p>' +
-            '<p><strong>Full Name:</strong> ' + fullName + '</p>';
-    }
-
-    // ==========================
-    // BOOLEANS
-    // ==========================
-
-    var booleansDiv = document.getElementById("booleans");
-    if (booleansDiv) {
-        var passed = true;
-        var loggedIn = false;
-
-        booleansDiv.innerHTML = 
-            '<p><strong>Passed:</strong> ' + passed + '</p>' +
-            '<p><strong>Logged In:</strong> ' + loggedIn + '</p>' +
-            '<p><strong>Type of true:</strong> ' + typeof true + '</p>';
-    }
-
-    // ==========================
-    // COMPARISONS
-    // ==========================
-
-    var comparisonsDiv = document.getElementById("comparisons");
-    if (comparisonsDiv) {
-        var age = 20;
-        var comparisonResult = age >= 18;
-
-        comparisonsDiv.innerHTML = 
-            '<p><strong>Age =</strong> ' + age + '</p>' +
-            '<p><strong>Is Adult?</strong> ' + comparisonResult + '</p>' +
-            '<p><strong>10 > 5 :</strong> ' + (10 > 5) + '</p>' +
-            '<p><strong>10 == "10" :</strong> ' + (10 == "10") + ' (loose equality)</p>' +
-            '<p><strong>10 === "10" :</strong> ' + (10 === "10") + ' (strict equality)</p>';
-    }
-
-    // ==========================
-    // ARRAYS
-    // ==========================
-
-    var arraysDiv = document.getElementById("arrays");
-    if (arraysDiv) {
-        var languages = ["HTML", "CSS", "JavaScript", "React", "Git"];
-        var arrayOutput = "";
-
-        for (var i = 0; i < languages.length; i++) {
-            arrayOutput += '<li>' + languages[i] + '</li>';
+    
+    console.log('=== CALLBACK FUNCTIONS DEMO ===');
+    
+    // 1. Callback with setTimeout (asynchronous callback)
+    console.log('1. setTimeout callback demo:');
+    setTimeout(function() {
+        console.log('   ⏰ This is a callback function executed after 2 seconds');
+        var timeDisplay = document.createElement('p');
+        timeDisplay.textContent = '⏰ Callback executed: ' + new Date().toLocaleTimeString();
+        timeDisplay.style.color = '#7c3aed';
+        timeDisplay.style.fontWeight = '500';
+        timeDisplay.style.padding = '8px';
+        timeDisplay.style.background = '#ede9fe';
+        timeDisplay.style.borderRadius = '6px';
+        
+        var loopsSection = document.querySelector('section:nth-child(11)');
+        if (loopsSection) {
+            loopsSection.appendChild(timeDisplay);
         }
-
-        arraysDiv.innerHTML = 
-            '<p><strong>Languages learned:</strong></p>' +
-            '<ul>' + arrayOutput + '</ul>' +
-            '<p><strong>Total languages:</strong> ' + languages.length + '</p>';
+    }, 2000);
+    
+    // 2. Callback with forEach (array method)
+    console.log('2. forEach callback demo:');
+    var skills = ['DOM Manipulation', 'Event Handling', 'Callbacks', 'Selectors'];
+    var skillList = document.createElement('ul');
+    skillList.style.marginTop = '10px';
+    skillList.style.padding = '10px';
+    skillList.style.background = '#f8fafc';
+    skillList.style.borderRadius = '6px';
+    skillList.style.borderLeft = '4px solid #2563eb';
+    
+    skills.forEach(function(skill, index) {
+        var listItem = document.createElement('li');
+        listItem.textContent = (index + 1) + '. ' + skill;
+        listItem.style.padding = '3px 0';
+        skillList.appendChild(listItem);
+        console.log('   - ' + skill);
+    });
+    
+    var arraysSection = document.querySelector('section:nth-child(8)');
+    if (arraysSection) {
+        arraysSection.appendChild(skillList);
     }
-
-    // ==========================
-    // OBJECTS
-    // ==========================
-
-    var objectsDiv = document.getElementById("objects");
-    if (objectsDiv) {
-        var student = {
-            name: "Musa",
-            department: "Computer Science",
-            level: "300",
-            track: "Frontend"
-        };
-
-        objectsDiv.innerHTML = 
-            '<p><strong>Name:</strong> ' + student.name + '</p>' +
-            '<p><strong>Department:</strong> ' + student.department + '</p>' +
-            '<p><strong>Level:</strong> ' + student.level + '</p>' +
-            '<p><strong>Track:</strong> ' + student.track + '</p>';
+    
+    // 3. Callback with event listeners (already demonstrated above)
+    console.log('3. Event listener callbacks: Already added to all buttons');
+    
+    // 4. Custom callback function example
+    console.log('4. Custom callback function demo:');
+    
+    // Higher-order function that accepts a callback
+    function processUserInput(input, callback) {
+        console.log('   Processing input: "' + input + '"');
+        var result = callback(input);
+        console.log('   Result: ' + result);
+        return result;
     }
-
-    // ==========================
-    // LOOPS
-    // ==========================
-
-    var loopsDiv = document.getElementById("loops");
-    if (loopsDiv) {
-        var loopOutput = "";
-        for (var i = 1; i <= 10; i++) {
-            loopOutput += '<p>Iteration ' + i + '</p>';
-        }
-
-        loopsDiv.innerHTML = 
-            '<p><strong>Loop from 1 to 10:</strong></p>' +
-            loopOutput;
+    
+    // Callback function for string transformation
+    function transformText(text) {
+        return text.toUpperCase() + ' (length: ' + text.length + ')';
     }
-
-    // ==========================
-    // CALCULATOR (Function remains global for onclick)
-    // ==========================
-
-    window.calculate = function() {
-        var num1 = Number(document.getElementById("num1").value);
-        var num2 = Number(document.getElementById("num2").value);
-        var sum = num1 + num2;
-        var answerDiv = document.getElementById("answer");
-        if (answerDiv) {
-            answerDiv.innerHTML = '✅ Sum = ' + sum;
+    
+    // Callback function for number validation
+    function validateNumber(num) {
+        if (isNaN(num)) return '❌ Invalid number';
+        return '✅ Valid number: ' + Number(num);
+    }
+    
+    // Execute the callbacks
+    processUserInput('javascript is fun', transformText);
+    processUserInput('42', validateNumber);
+    processUserInput('hello', validateNumber);
+    
+    // Display custom callback results
+    var callbackResult = document.createElement('div');
+    callbackResult.style.marginTop = '10px';
+    callbackResult.style.padding = '10px';
+    callbackResult.style.background = '#f0fdf4';
+    callbackResult.style.borderRadius = '6px';
+    callbackResult.style.borderLeft = '4px solid #16a34a';
+    callbackResult.innerHTML = 
+        '<strong>🔄 Callback Results:</strong><br>' +
+        '• "javascript is fun" → ' + transformText('javascript is fun') + '<br>' +
+        '• "42" → ' + validateNumber('42') + '<br>' +
+        '• "hello" → ' + validateNumber('hello');
+    
+    var comparisonsSection = document.querySelector('section:nth-child(6)');
+    if (comparisonsSection) {
+        comparisonsSection.appendChild(callbackResult);
+    }
+    
+    // ==========================================
+    // ADD INTERACTIVE DEMO FOR DOM SELECTORS
+    // ==========================================
+    
+    console.log('=== ADDING INTERACTIVE SELECTOR DEMO ===');
+    
+    // Create selector demo section
+    var selectorDemoSection = document.createElement('section');
+    selectorDemoSection.innerHTML = 
+        '<h2>🔍 DOM Selectors Interactive Demo</h2>' +
+        '<p class="section-desc">Click buttons to see DOM selectors in action</p>' +
+        '<div style="display:flex; flex-wrap:wrap; gap:10px; margin:10px 0;">' +
+        '   <button class="btn btn-primary" id="highlightAllBtn">Highlight All Sections</button>' +
+        '   <button class="btn btn-secondary" id="highlightFirstBtn">Highlight First Section</button>' +
+        '   <button class="btn btn-secondary" id="countSectionsBtn">Count Sections</button>' +
+        '   <button class="btn btn-danger" id="clearHighlightsBtn">Clear Highlights</button>' +
+        '</div>' +
+        '<div id="selectorOutput" style="padding:12px; background:#f8fafc; border-radius:6px; border-left:4px solid #2563eb; margin-top:10px;">' +
+        '   📌 Click a button to see selector results' +
+        '</div>';
+    
+    // Insert after the introduction section
+    var introSection = document.querySelector('section:first-of-type');
+    if (introSection) {
+        introSection.insertAdjacentElement('afterend', selectorDemoSection);
+    }
+    
+    // Add styles for the new buttons
+    var styleTag = document.createElement('style');
+    styleTag.textContent = 
+        '.btn-primary { background: #2563eb; color: white; padding: 8px 16px; border: none; border-radius: 6px; cursor: pointer; } ' +
+        '.btn-secondary { background: #e2e8f0; color: #334155; padding: 8px 16px; border: none; border-radius: 6px; cursor: pointer; } ' +
+        '.btn-danger { background: #dc2626; color: white; padding: 8px 16px; border: none; border-radius: 6px; cursor: pointer; } ' +
+        '.btn-primary:hover, .btn-secondary:hover, .btn-danger:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.1); } ' +
+        '.section-highlight { border: 3px solid #2563eb !important; background: #dbeafe !important; transition: all 0.3s ease; }';
+    document.head.appendChild(styleTag);
+    
+    // Add event listeners for selector demo
+    var selectorOutput = document.getElementById('selectorOutput');
+    
+    document.getElementById('highlightAllBtn').addEventListener('click', function() {
+        var allSections = document.querySelectorAll('section');
+        for (var i = 0; i < allSections.length; i++) {
+            allSections[i].classList.add('section-highlight');
         }
-    };
-
-    // ==========================
-    // DATE & TIME (Function remains global for onclick)
-    // ==========================
-
-    window.showTime = function() {
-        var today = new Date();
-        var options = { 
-            weekday: 'long', 
-            year: 'numeric', 
-            month: 'long', 
-            day: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit'
-        };
-        var timeDiv = document.getElementById("time");
-        if (timeDiv) {
-            timeDiv.innerHTML = today.toLocaleDateString('en-US', options);
+        selectorOutput.innerHTML = '✅ Selected ' + allSections.length + ' sections using <code>querySelectorAll("section")</code>';
+        console.log('Highlighted all ' + allSections.length + ' sections');
+    });
+    
+    document.getElementById('highlightFirstBtn').addEventListener('click', function() {
+        var firstSection = document.querySelector('section');
+        // Remove highlights first
+        var allSections = document.querySelectorAll('section');
+        for (var i = 0; i < allSections.length; i++) {
+            allSections[i].classList.remove('section-highlight');
         }
-    };
-
-    // ==========================
-    // GREETING FUNCTION (remains global for onclick)
-    // ==========================
-
-    window.greetUser = function() {
-        var nameInput = document.getElementById("nameInput");
-        var greetingDiv = document.getElementById("greeting");
-        if (nameInput && greetingDiv) {
-            var name = nameInput.value;
-            if (name === "") {
-                name = "Guest";
+        if (firstSection) {
+            firstSection.classList.add('section-highlight');
+            var sectionTitle = firstSection.querySelector('h2');
+            var titleText = sectionTitle ? sectionTitle.textContent : 'First';
+            selectorOutput.innerHTML = '🔹 Selected first section using <code>querySelector("section")</code>: "' + titleText + '"';
+            console.log('Highlighted first section: ' + titleText);
+        }
+    });
+    
+    document.getElementById('countSectionsBtn').addEventListener('click', function() {
+        var allSections = document.querySelectorAll('section');
+        var totalElements = document.querySelectorAll('*').length;
+        var totalButtons = document.querySelectorAll('button').length;
+        var totalInputs = document.querySelectorAll('input').length;
+        
+        selectorOutput.innerHTML = 
+            '📊 Statistics:<br>' +
+            '• Sections: ' + allSections.length + ' (using <code>querySelectorAll</code>)<br>' +
+            '• Total elements: ' + totalElements + ' (using <code>querySelectorAll("*")</code>)<br>' +
+            '• Buttons: ' + totalButtons + ' (using <code>querySelectorAll("button")</code>)<br>' +
+            '• Inputs: ' + totalInputs + ' (using <code>querySelectorAll("input")</code>)';
+        console.log('Page statistics: Sections=' + allSections.length + ', Elements=' + totalElements);
+    });
+    
+    document.getElementById('clearHighlightsBtn').addEventListener('click', function() {
+        var allSections = document.querySelectorAll('section');
+        for (var i = 0; i < allSections.length; i++) {
+            allSections[i].classList.remove('section-highlight');
+        }
+        selectorOutput.innerHTML = '🧹 Highlights cleared';
+        console.log('Cleared all highlights');
+    });
+    
+    // ==========================================
+    // ADD EVENT LOGGER
+    // ==========================================
+    
+    console.log('=== ADDING EVENT LOGGER ===');
+    
+    var eventLogger = document.createElement('div');
+    eventLogger.style.position = 'fixed';
+    eventLogger.style.bottom = '20px';
+    eventLogger.style.right = '20px';
+    eventLogger.style.maxWidth = '350px';
+    eventLogger.style.background = '#1e293b';
+    eventLogger.style.color = 'white';
+    eventLogger.style.padding = '12px 16px';
+    eventLogger.style.borderRadius = '8px';
+    eventLogger.style.boxShadow = '0 8px 16px rgba(0,0,0,0.3)';
+    eventLogger.style.zIndex = '9999';
+    eventLogger.style.fontSize = '13px';
+    eventLogger.style.maxHeight = '150px';
+    eventLogger.style.overflowY = 'auto';
+    eventLogger.innerHTML = 
+        '<strong style="display:block; margin-bottom:6px;">📨 Event Log</strong>' +
+        '<div id="eventLogContent">Ready...</div>';
+    document.body.appendChild(eventLogger);
+    
+    // Update event log with click events
+    document.addEventListener('click', function(e) {
+        var target = e.target;
+        var logContent = document.getElementById('eventLogContent');
+        if (logContent) {
+            var tagName = target.tagName;
+            var id = target.id ? '#' + target.id : '';
+            var className = target.className ? '.' + target.className.split(' ')[0] : '';
+            var text = target.textContent ? ' "' + target.textContent.trim().substring(0, 30) + '"' : '';
+            var message = '🖱️ Clicked: ' + tagName.toLowerCase() + id + className + text;
+            logContent.innerHTML = message + '<br>' + logContent.innerHTML;
+            if (logContent.children.length > 10) {
+                logContent.removeChild(logContent.lastChild);
             }
-            greetingDiv.innerHTML = 'Welcome ' + name + '! Thanks for visiting this JavaScript presentation. 🎉';
         }
-    };
+    });
+    
+    console.log('✅ Event logger added to page');
+    
+    // ==========================================
+    // FINAL SUMMARY
+    // ==========================================
+    
+    console.log('=== SUMMARY ===');
+    console.log('✅ DOM Selectors demonstrated');
+    console.log('✅ DOM Events demonstrated');
+    console.log('✅ Callback Functions demonstrated');
+    console.log('✅ All features working with existing HTML');
 
-    // Console log for debugging
-    console.log('✅ DOM Selectors, Events, and Callbacks demo loaded successfully');
-    console.log('ℹ️ If buttons don\'t work, check that your HTML has the correct IDs');
 });
