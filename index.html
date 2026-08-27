@@ -3,110 +3,200 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JavaScript Learning Outcome</title>
+    <title>JavaScript Learning Outcome - DOM & Events</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <header>
-    <h1>JavaScript Learning Outcome Presentation</h1>
-    <p>SIWES Frontend Development</p>
+    <div class="header-content">
+        <h1>🚀 JavaScript Learning Outcome</h1>
+        <p>SIWES Frontend Development · DOM Selectors, Events & Callbacks</p>
+    </div>
 </header>
 
 <main>
 
-<section>
-    <h2>Introduction</h2>
-    <p>
-        This webpage demonstrates my understanding of the fundamental concepts
-        of JavaScript. Every section below explains a different concept and
-        displays examples generated with JavaScript.
-    </p>
-</section>
+    <!-- ===== INTRODUCTION ===== -->
+    <section class="intro-section">
+        <h2>📚 Introduction</h2>
+        <p>
+            This webpage demonstrates my understanding of JavaScript fundamentals 
+            including <strong>DOM Selectors</strong>, <strong>DOM Events</strong>, 
+            <strong>Callback Functions</strong>, Variables, Numbers, Strings, 
+            Booleans, Comparisons, Functions, Arrays, Objects, and Loops.
+        </p>
+        <div class="concept-badges">
+            <span class="badge badge-dom">DOM Selectors</span>
+            <span class="badge badge-events">DOM Events</span>
+            <span class="badge badge-callback">Callbacks</span>
+            <span class="badge badge-core">Core JS</span>
+        </div>
+    </section>
 
-<section>
-    <h2>Variables</h2>
-    <div id="variables"></div>
-</section>
+    <!-- ===== DOM SELECTORS DEMO ===== -->
+    <section class="dom-section">
+        <h2>🔍 DOM Selectors</h2>
+        <p class="section-desc">Using <code>getElementById</code>, <code>querySelector</code>, and <code>querySelectorAll</code></p>
+        
+        <div class="selector-demo">
+            <div class="box-container" id="boxContainer">
+                <div class="box" data-id="1">📦 Box 1</div>
+                <div class="box special" data-id="2">⭐ Special Box</div>
+                <div class="box" data-id="3">📦 Box 3</div>
+                <div class="box special" data-id="4">🌈 Rainbow Box</div>
+                <div class="box" data-id="5">📦 Box 5</div>
+            </div>
+            
+            <div class="selector-controls">
+                <button class="btn btn-primary" id="selectAllBtn">Select All Boxes</button>
+                <button class="btn btn-secondary" id="selectSpecialBtn">Select Special</button>
+                <button class="btn btn-secondary" id="selectFirstBtn">Select First Box</button>
+                <button class="btn btn-danger" id="clearSelectionBtn">Clear</button>
+            </div>
+            
+            <div class="selector-log" id="selectorLog">
+                <span class="log-icon">📌</span>
+                <span id="selectorMessage">Click a button to see DOM selectors in action</span>
+            </div>
+        </div>
+    </section>
 
-<section>
-    <h2>Numbers</h2>
-    <div id="numbers"></div>
-</section>
+    <!-- ===== DOM EVENTS & CALLBACKS DEMO ===== -->
+    <section class="events-section">
+        <h2>⚡ DOM Events & Callback Functions</h2>
+        <p class="section-desc">Interactive demonstration of event listeners and callback functions</p>
+        
+        <div class="events-grid">
+            <!-- Event Demo -->
+            <div class="event-demo">
+                <h3>🖱️ Event Listeners</h3>
+                <div class="event-controls">
+                    <button class="btn btn-primary" id="clickBtn">Click Me</button>
+                    <button class="btn btn-secondary" id="resetCounterBtn">Reset</button>
+                    <button class="btn btn-warning" id="colorBtn">🎨 Change Color</button>
+                </div>
+                <div class="event-stats">
+                    <span>Clicks: <strong id="clickCounter">0</strong></span>
+                    <span>Status: <span id="eventStatus">Active ✅</span></span>
+                </div>
+                <div class="event-controls">
+                    <button class="btn btn-danger" id="removeEventBtn">⛔ Remove Event</button>
+                    <button class="btn btn-success" id="addEventBtn">✅ Re-add Event</button>
+                </div>
+            </div>
 
-<section>
-    <h2>Strings</h2>
-    <div id="strings"></div>
-</section>
+            <!-- Callback Demo -->
+            <div class="callback-demo">
+                <h3>🔄 Callback Functions</h3>
+                <div class="callback-input-group">
+                    <input type="text" id="callbackInput" placeholder="Type something..." />
+                    <button class="btn btn-primary" id="callbackBtn">Process</button>
+                </div>
+                <div class="callback-result" id="callbackResult">
+                    <span class="result-label">Result:</span>
+                    <span id="callbackOutput">Waiting for input...</span>
+                </div>
+                <div class="callback-info">
+                    <small>💡 Press Enter or click Process to execute callback</small>
+                </div>
+            </div>
+        </div>
 
-<section>
-    <h2>Booleans</h2>
-    <div id="booleans"></div>
-</section>
+        <div class="event-log" id="eventLog">
+            <span class="log-icon">📨</span>
+            <span id="eventMessage">Event log will appear here</span>
+        </div>
+    </section>
 
-<section>
-    <h2>Comparisons</h2>
-    <div id="comparisons"></div>
-</section>
+    <!-- ===== VARIABLES ===== -->
+    <section>
+        <h2>📦 Variables</h2>
+        <div id="variables" class="content-display"></div>
+    </section>
 
-<section>
-    <h2>Functions</h2>
+    <!-- ===== NUMBERS ===== -->
+    <section>
+        <h2>🔢 Numbers</h2>
+        <div id="numbers" class="content-display"></div>
+    </section>
 
-    <input type="text" id="nameInput" placeholder="Enter your name">
+    <!-- ===== STRINGS ===== -->
+    <section>
+        <h2>📝 Strings</h2>
+        <div id="strings" class="content-display"></div>
+    </section>
 
-    <button onclick="greetUser()">
-        Generate Greeting
-    </button>
+    <!-- ===== BOOLEANS ===== -->
+    <section>
+        <h2>⚖️ Booleans</h2>
+        <div id="booleans" class="content-display"></div>
+    </section>
 
-    <p id="greeting"></p>
+    <!-- ===== COMPARISONS ===== -->
+    <section>
+        <h2>🔍 Comparisons</h2>
+        <div id="comparisons" class="content-display"></div>
+    </section>
 
-</section>
+    <!-- ===== FUNCTIONS ===== -->
+    <section>
+        <h2>🎯 Functions</h2>
+        <div class="interactive-demo">
+            <input type="text" id="nameInput" placeholder="Enter your name">
+            <button onclick="greetUser()" class="btn btn-primary">
+                Generate Greeting
+            </button>
+            <p id="greeting" class="result-display"></p>
+        </div>
+    </section>
 
-<section>
-    <h2>Arrays</h2>
-    <div id="arrays"></div>
-</section>
+    <!-- ===== ARRAYS ===== -->
+    <section>
+        <h2>📊 Arrays</h2>
+        <div id="arrays" class="content-display"></div>
+    </section>
 
-<section>
-    <h2>Objects</h2>
-    <div id="objects"></div>
-</section>
+    <!-- ===== OBJECTS ===== -->
+    <section>
+        <h2>🎯 Objects</h2>
+        <div id="objects" class="content-display"></div>
+    </section>
 
-<section>
-    <h2>Loops</h2>
-    <div id="loops"></div>
-</section>
+    <!-- ===== LOOPS ===== -->
+    <section>
+        <h2>🔄 Loops</h2>
+        <div id="loops" class="content-display"></div>
+    </section>
 
-<section>
-    <h2>Mini Calculator</h2>
+    <!-- ===== CALCULATOR ===== -->
+    <section>
+        <h2>🧮 Mini Calculator</h2>
+        <div class="interactive-demo calculator">
+            <input type="number" id="num1" placeholder="First Number">
+            <input type="number" id="num2" placeholder="Second Number">
+            <button onclick="calculate()" class="btn btn-primary">
+                Calculate Sum
+            </button>
+            <h3 id="answer" class="result-display"></h3>
+        </div>
+    </section>
 
-    <input type="number" id="num1" placeholder="First Number">
-
-    <input type="number" id="num2" placeholder="Second Number">
-
-    <button onclick="calculate()">
-        Calculate Sum
-    </button>
-
-    <h3 id="answer"></h3>
-
-</section>
-
-<section>
-    <h2>Current Date and Time</h2>
-
-    <button onclick="showTime()">
-        Display Time
-    </button>
-
-    <p id="time"></p>
-
-</section>
+    <!-- ===== DATE & TIME ===== -->
+    <section>
+        <h2>🕐 Current Date and Time</h2>
+        <div class="interactive-demo">
+            <button onclick="showTime()" class="btn btn-primary">
+                Display Time
+            </button>
+            <p id="time" class="result-display"></p>
+        </div>
+    </section>
 
 </main>
 
 <footer>
-    JavaScript Learning Outcome © 2026
+    <p>JavaScript Learning Outcome © 2026</p>
 </footer>
 
 <script src="script.js"></script>
