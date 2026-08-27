@@ -1,4 +1,6 @@
-
+// ==========================================
+// WAIT FOR DOM TO LOAD
+// ==========================================
 
 document.addEventListener('DOMContentLoaded', function() {
 
