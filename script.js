@@ -1,408 +1,486 @@
 // ==========================================
-// WAIT FOR DOM TO LOAD
+// MAKE ORIGINAL FUNCTIONS WORK (GLOBAL SCOPE)
 // ==========================================
 
+// These need to be global for onclick attributes to work
+window.greetUser = function() {
+    var nameInput = document.getElementById('nameInput');
+    var greeting = document.getElementById('greeting');
+    if (nameInput && greeting) {
+        var name = nameInput.value || 'Guest';
+        greeting.innerHTML = 'Welcome ' + name + '! Thanks for visiting this JavaScript presentation. 🎉';
+    }
+};
+
+window.calculate = function() {
+    var num1 = Number(document.getElementById('num1').value);
+    var num2 = Number(document.getElementById('num2').value);
+    var answer = document.getElementById('answer');
+    if (answer) {
+        answer.innerHTML = '✅ Sum = ' + (num1 + num2);
+    }
+};
+
+window.showTime = function() {
+    var timeDiv = document.getElementById('time');
+    if (timeDiv) {
+        var now = new Date();
+        timeDiv.innerHTML = now.toLocaleString('en-US', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit'
+        });
+    }
+};
+
+// ==========================================
+// ORIGINAL CODE (Preserved exactly as it was)
+// ==========================================
+
+// ==========================
+// VARIABLES
+// ==========================
+
+let studentName = "Musa";
+const internship = "SIWES";
+let completedWeeks = 5;
+
+document.getElementById("variables").innerHTML = `
+<p>Name: ${studentName}</p>
+<p>Programme: ${internship}</p>
+<p>Completed Weeks: ${completedWeeks}</p>
+`;
+
+// ==========================
+// NUMBERS
+// ==========================
+
+let score1 = 85;
+let score2 = 90;
+let average = (score1 + score2) / 2;
+
+document.getElementById("numbers").innerHTML = `
+<p>Score One: ${score1}</p>
+<p>Score Two: ${score2}</p>
+<p>Average Score: ${average}</p>
+`;
+
+// ==========================
+// STRINGS
+// ==========================
+
+let firstName = "Musa";
+let lastName = "Gaya";
+let fullName = firstName + " " + lastName;
+
+document.getElementById("strings").innerHTML = `
+<p>First Name: ${firstName}</p>
+<p>Last Name: ${lastName}</p>
+<p>Full Name: ${fullName}</p>
+`;
+
+// ==========================
+// BOOLEANS
+// ==========================
+
+let passed = true;
+let loggedIn = false;
+
+document.getElementById("booleans").innerHTML = `
+<p>Passed: ${passed}</p>
+<p>Logged In: ${loggedIn}</p>
+`;
+
+// ==========================
+// COMPARISONS
+// ==========================
+
+let age = 20;
+let comparisonResult = age >= 18;
+
+document.getElementById("comparisons").innerHTML = `
+<p>Age = ${age}</p>
+<p>Is Adult? ${comparisonResult}</p>
+<p>10 > 5 : ${10 > 5}</p>
+<p>10 == "10" : ${10 == "10"}</p>
+<p>10 === "10" : ${10 === "10"}</p>
+`;
+
+// ==========================
+// ARRAYS
+// ==========================
+
+let languages = ["HTML", "CSS", "JavaScript", "React", "Git"];
+let arrayOutput = "";
+
+languages.forEach(function(item) {
+    arrayOutput += "<li>" + item + "</li>";
+});
+
+document.getElementById("arrays").innerHTML = "<ul>" + arrayOutput + "</ul>";
+
+// ==========================
+// OBJECTS
+// ==========================
+
+let student = {
+    name: "Musa",
+    department: "Computer Science",
+    level: "300",
+    track: "Frontend"
+};
+
+document.getElementById("objects").innerHTML = `
+<p>Name: ${student.name}</p>
+<p>Department: ${student.department}</p>
+<p>Level: ${student.level}</p>
+<p>Track: ${student.track}</p>
+`;
+
+// ==========================
+// LOOPS
+// ==========================
+
+let loopOutput = "";
+
+for (let i = 1; i <= 10; i++) {
+    loopOutput += `<p>Iteration ${i}</p>`;
+}
+
+document.getElementById("loops").innerHTML = loopOutput;
+
+// ==========================================
+// ADD DOM SELECTORS DEMO (Using existing elements)
+// ==========================================
+
+// Wait for DOM to load
 document.addEventListener('DOMContentLoaded', function() {
-
-    console.log('✅ JavaScript loaded successfully');
-
-    // ==========================================
-    // DEMONSTRATE DOM SELECTORS
-    // ==========================================
     
-    // 1. getElementById - Select elements by ID
-    console.log('=== DOM SELECTORS DEMO ===');
+    console.log('✅ DOM Selectors Demo Loaded');
     
-    // Using getElementById
-    var headerElement = document.getElementById('variables');
-    console.log('1. getElementById("variables"):', headerElement);
-    
-    // Using querySelector - selects first matching element
-    var firstSection = document.querySelector('section');
-    console.log('2. querySelector("section"):', firstSection);
-    
-    // Using querySelectorAll - selects all matching elements
-    var allSections = document.querySelectorAll('section');
-    console.log('3. querySelectorAll("section"):', allSections.length + ' sections found');
-    
-    // Using querySelector with class selector
-    var mainContent = document.querySelector('.interactive-demo');
-    console.log('4. querySelector(".interactive-demo"):', mainContent);
-    
-    // ==========================================
-    // DEMONSTRATE DOM EVENTS
-    // ==========================================
-    
-    console.log('=== DOM EVENTS DEMO ===');
-    
-    // Find all buttons in the page
-    var allButtons = document.querySelectorAll('button');
-    console.log('Found ' + allButtons.length + ' buttons on the page');
-    
-    // Add event listeners to existing buttons
-    var buttons = document.querySelectorAll('button');
-    var clickCounter = 0;
-    var counterDisplay = document.createElement('p');
-    counterDisplay.style.marginTop = '10px';
-    counterDisplay.style.fontWeight = 'bold';
-    counterDisplay.style.color = '#2563eb';
-    counterDisplay.textContent = 'Button clicks: 0';
-    
-    // Find the functions section to add our counter
-    var functionsSection = document.querySelector('section:nth-child(7)');
-    if (functionsSection) {
-        functionsSection.appendChild(counterDisplay);
-    }
-    
-    // Add click events to all buttons
-    for (var i = 0; i < buttons.length; i++) {
-        (function(buttonIndex) {
-            buttons[buttonIndex].addEventListener('click', function(e) {
-                clickCounter++;
-                counterDisplay.textContent = 'Button clicks: ' + clickCounter;
-                
-                // Show which button was clicked
-                var buttonText = this.textContent.trim() || 'Button ' + (buttonIndex + 1);
-                console.log('🖱️ Clicked: "' + buttonText + '" - Total clicks: ' + clickCounter);
-                
-                // Add visual feedback
-                this.style.transform = 'scale(0.95)';
-                setTimeout(function() {
-                    buttons[buttonIndex].style.transform = 'scale(1)';
-                }, 150);
-            });
-        })(i);
-    }
-    
-    // Demonstrate event removal and re-addition
-    // Find the first button to demonstrate
-    var firstButton = document.querySelector('button');
-    if (firstButton) {
-        console.log('Demonstrating event removal on first button');
-        
-        // Function to handle click
-        function specialClickHandler() {
-            alert('🎯 This button had a special event listener!');
-        }
-        
-        // Add special event
-        firstButton.addEventListener('click', specialClickHandler);
-        
-        // Remove after 3 seconds (demonstration)
-        setTimeout(function() {
-            firstButton.removeEventListener('click', specialClickHandler);
-            console.log('⛔ Special event removed from first button');
-        }, 3000);
-        
-        // Re-add after 6 seconds (demonstration)
-        setTimeout(function() {
-            firstButton.addEventListener('click', specialClickHandler);
-            console.log('✅ Special event re-added to first button');
-        }, 6000);
-    }
-    
-    // ==========================================
-    // DEMONSTRATE CALLBACK FUNCTIONS
-    // ==========================================
-    
-    console.log('=== CALLBACK FUNCTIONS DEMO ===');
-    
-    // 1. Callback with setTimeout (asynchronous callback)
-    console.log('1. setTimeout callback demo:');
-    setTimeout(function() {
-        console.log('   ⏰ This is a callback function executed after 2 seconds');
-        var timeDisplay = document.createElement('p');
-        timeDisplay.textContent = '⏰ Callback executed: ' + new Date().toLocaleTimeString();
-        timeDisplay.style.color = '#7c3aed';
-        timeDisplay.style.fontWeight = '500';
-        timeDisplay.style.padding = '8px';
-        timeDisplay.style.background = '#ede9fe';
-        timeDisplay.style.borderRadius = '6px';
-        
-        var loopsSection = document.querySelector('section:nth-child(11)');
-        if (loopsSection) {
-            loopsSection.appendChild(timeDisplay);
-        }
-    }, 2000);
-    
-    // 2. Callback with forEach (array method)
-    console.log('2. forEach callback demo:');
-    var skills = ['DOM Manipulation', 'Event Handling', 'Callbacks', 'Selectors'];
-    var skillList = document.createElement('ul');
-    skillList.style.marginTop = '10px';
-    skillList.style.padding = '10px';
-    skillList.style.background = '#f8fafc';
-    skillList.style.borderRadius = '6px';
-    skillList.style.borderLeft = '4px solid #2563eb';
-    
-    skills.forEach(function(skill, index) {
-        var listItem = document.createElement('li');
-        listItem.textContent = (index + 1) + '. ' + skill;
-        listItem.style.padding = '3px 0';
-        skillList.appendChild(listItem);
-        console.log('   - ' + skill);
-    });
-    
-    var arraysSection = document.querySelector('section:nth-child(8)');
-    if (arraysSection) {
-        arraysSection.appendChild(skillList);
-    }
-    
-    // 3. Callback with event listeners (already demonstrated above)
-    console.log('3. Event listener callbacks: Already added to all buttons');
-    
-    // 4. Custom callback function example
-    console.log('4. Custom callback function demo:');
-    
-    // Higher-order function that accepts a callback
-    function processUserInput(input, callback) {
-        console.log('   Processing input: "' + input + '"');
-        var result = callback(input);
-        console.log('   Result: ' + result);
-        return result;
-    }
-    
-    // Callback function for string transformation
-    function transformText(text) {
-        return text.toUpperCase() + ' (length: ' + text.length + ')';
-    }
-    
-    // Callback function for number validation
-    function validateNumber(num) {
-        if (isNaN(num)) return '❌ Invalid number';
-        return '✅ Valid number: ' + Number(num);
-    }
-    
-    // Execute the callbacks
-    processUserInput('javascript is fun', transformText);
-    processUserInput('42', validateNumber);
-    processUserInput('hello', validateNumber);
-    
-    // Display custom callback results
-    var callbackResult = document.createElement('div');
-    callbackResult.style.marginTop = '10px';
-    callbackResult.style.padding = '10px';
-    callbackResult.style.background = '#f0fdf4';
-    callbackResult.style.borderRadius = '6px';
-    callbackResult.style.borderLeft = '4px solid #16a34a';
-    callbackResult.innerHTML = 
-        '<strong>🔄 Callback Results:</strong><br>' +
-        '• "javascript is fun" → ' + transformText('javascript is fun') + '<br>' +
-        '• "42" → ' + validateNumber('42') + '<br>' +
-        '• "hello" → ' + validateNumber('hello');
-    
-    var comparisonsSection = document.querySelector('section:nth-child(6)');
-    if (comparisonsSection) {
-        comparisonsSection.appendChild(callbackResult);
-    }
-    
-    // ==========================================
-    // ADD INTERACTIVE DEMO FOR DOM SELECTORS
-    // ==========================================
-    
-    console.log('=== ADDING INTERACTIVE SELECTOR DEMO ===');
-    
-    // Create selector demo section
-    var selectorDemoSection = document.createElement('section');
-    selectorDemoSection.id = 'selectorDemoSection';
-    selectorDemoSection.innerHTML = 
-        '<h2>🔍 DOM Selectors Interactive Demo</h2>' +
-        '<p class="section-desc">Click buttons to see DOM selectors in action</p>' +
-        '<div style="display:flex; flex-wrap:wrap; gap:10px; margin:10px 0;">' +
-        '   <button class="btn btn-primary" id="highlightAllBtn">Highlight All Sections</button>' +
-        '   <button class="btn btn-secondary" id="highlightFirstBtn">Highlight First Section</button>' +
-        '   <button class="btn btn-secondary" id="countSectionsBtn">Count Sections</button>' +
-        '   <button class="btn btn-danger" id="clearHighlightsBtn">Clear Highlights</button>' +
-        '</div>' +
-        '<div id="selectorOutput" style="padding:12px; background:#f8fafc; border-radius:6px; border-left:4px solid #2563eb; margin-top:10px;">' +
-        '   📌 Click a button to see selector results' +
-        '</div>';
+    // Create a new section for DOM Selectors demo
+    var selectorSection = document.createElement('section');
+    selectorSection.innerHTML = `
+        <h2>🔍 DOM Selectors Demonstration</h2>
+        <div id="selectorDemo" style="padding:15px; background:#f8fafc; border-radius:8px; border-left:4px solid #2563eb;">
+            <p><strong>Using DOM Selectors:</strong></p>
+            <div id="selectorResults" style="margin:10px 0;"></div>
+            <button onclick="showSelectorDemo()" style="padding:8px 16px; background:#2563eb; color:white; border:none; border-radius:6px; cursor:pointer;">
+                Run Selector Demo
+            </button>
+            <button onclick="highlightSections()" style="padding:8px 16px; background:#7c3aed; color:white; border:none; border-radius:6px; cursor:pointer; margin-left:8px;">
+                Highlight Sections
+            </button>
+            <button onclick="clearHighlights()" style="padding:8px 16px; background:#dc2626; color:white; border:none; border-radius:6px; cursor:pointer; margin-left:8px;">
+                Clear Highlights
+            </button>
+        </div>
+    `;
     
     // Insert after the introduction section
     var introSection = document.querySelector('section:first-of-type');
     if (introSection) {
-        introSection.insertAdjacentElement('afterend', selectorDemoSection);
+        introSection.insertAdjacentElement('afterend', selectorSection);
     }
     
-    // Add styles for the new buttons
+    // Add styles for highlighting
     var styleTag = document.createElement('style');
-    styleTag.textContent = 
-        '.btn-primary { background: #2563eb; color: white; padding: 8px 16px; border: none; border-radius: 6px; cursor: pointer; } ' +
-        '.btn-secondary { background: #e2e8f0; color: #334155; padding: 8px 16px; border: none; border-radius: 6px; cursor: pointer; } ' +
-        '.btn-danger { background: #dc2626; color: white; padding: 8px 16px; border: none; border-radius: 6px; cursor: pointer; } ' +
-        '.btn-primary:hover, .btn-secondary:hover, .btn-danger:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.1); } ' +
-        '.section-highlight { border: 3px solid #2563eb !important; background: #dbeafe !important; transition: all 0.3s ease; }';
+    styleTag.textContent = `
+        .section-highlight {
+            border: 3px solid #2563eb !important;
+            background: #dbeafe !important;
+            transition: all 0.3s ease;
+        }
+    `;
     document.head.appendChild(styleTag);
-    
-    // ==========================================
-    // ADD EVENT LISTENERS FOR SELECTOR DEMO
-    // ==========================================
-    
-    // Use event delegation to handle clicks on dynamically created buttons
-    document.addEventListener('click', function(e) {
-        var target = e.target;
-        
-        // Handle Highlight All Sections button
-        if (target.id === 'highlightAllBtn') {
-            var allSections = document.querySelectorAll('section');
-            for (var i = 0; i < allSections.length; i++) {
-                allSections[i].classList.add('section-highlight');
-            }
-            var output = document.getElementById('selectorOutput');
-            if (output) {
-                output.innerHTML = '✅ Selected ' + allSections.length + ' sections using <code>querySelectorAll("section")</code>';
-            }
-            console.log('Highlighted all ' + allSections.length + ' sections');
-            e.preventDefault();
-        }
-        
-        // Handle Highlight First Section button
-        if (target.id === 'highlightFirstBtn') {
-            var firstSection = document.querySelector('section');
-            // Remove highlights first
-            var allSections = document.querySelectorAll('section');
-            for (var i = 0; i < allSections.length; i++) {
-                allSections[i].classList.remove('section-highlight');
-            }
-            if (firstSection) {
-                firstSection.classList.add('section-highlight');
-                var sectionTitle = firstSection.querySelector('h2');
-                var titleText = sectionTitle ? sectionTitle.textContent : 'First';
-                var output = document.getElementById('selectorOutput');
-                if (output) {
-                    output.innerHTML = '🔹 Selected first section using <code>querySelector("section")</code>: "' + titleText + '"';
-                }
-                console.log('Highlighted first section: ' + titleText);
-            }
-            e.preventDefault();
-        }
-        
-        // Handle Count Sections button
-        if (target.id === 'countSectionsBtn') {
-            var allSections = document.querySelectorAll('section');
-            var totalElements = document.querySelectorAll('*').length;
-            var totalButtons = document.querySelectorAll('button').length;
-            var totalInputs = document.querySelectorAll('input').length;
-            
-            var output = document.getElementById('selectorOutput');
-            if (output) {
-                output.innerHTML = 
-                    '📊 Statistics:<br>' +
-                    '• Sections: ' + allSections.length + ' (using <code>querySelectorAll</code>)<br>' +
-                    '• Total elements: ' + totalElements + ' (using <code>querySelectorAll("*")</code>)<br>' +
-                    '• Buttons: ' + totalButtons + ' (using <code>querySelectorAll("button")</code>)<br>' +
-                    '• Inputs: ' + totalInputs + ' (using <code>querySelectorAll("input")</code>)';
-            }
-            console.log('Page statistics: Sections=' + allSections.length + ', Elements=' + totalElements);
-            e.preventDefault();
-        }
-        
-        // Handle Clear Highlights button
-        if (target.id === 'clearHighlightsBtn') {
-            var allSections = document.querySelectorAll('section');
-            for (var i = 0; i < allSections.length; i++) {
-                allSections[i].classList.remove('section-highlight');
-            }
-            var output = document.getElementById('selectorOutput');
-            if (output) {
-                output.innerHTML = '🧹 Highlights cleared';
-            }
-            console.log('Cleared all highlights');
-            e.preventDefault();
-        }
-    });
-    
-    // ==========================================
-    // ADD EVENT LOGGER
-    // ==========================================
-    
-    console.log('=== ADDING EVENT LOGGER ===');
-    
-    var eventLogger = document.createElement('div');
-    eventLogger.style.position = 'fixed';
-    eventLogger.style.bottom = '20px';
-    eventLogger.style.right = '20px';
-    eventLogger.style.maxWidth = '350px';
-    eventLogger.style.background = '#1e293b';
-    eventLogger.style.color = 'white';
-    eventLogger.style.padding = '12px 16px';
-    eventLogger.style.borderRadius = '8px';
-    eventLogger.style.boxShadow = '0 8px 16px rgba(0,0,0,0.3)';
-    eventLogger.style.zIndex = '9999';
-    eventLogger.style.fontSize = '13px';
-    eventLogger.style.maxHeight = '150px';
-    eventLogger.style.overflowY = 'auto';
-    eventLogger.innerHTML = 
-        '<strong style="display:block; margin-bottom:6px;">📨 Event Log</strong>' +
-        '<div id="eventLogContent">Ready...</div>';
-    document.body.appendChild(eventLogger);
-    
-    // Update event log with click events
-    document.addEventListener('click', function(e) {
-        var target = e.target;
-        var logContent = document.getElementById('eventLogContent');
-        if (logContent) {
-            var tagName = target.tagName;
-            var id = target.id ? '#' + target.id : '';
-            var className = target.className ? '.' + target.className.split(' ')[0] : '';
-            var text = target.textContent ? ' "' + target.textContent.trim().substring(0, 30) + '"' : '';
-            var message = '🖱️ Clicked: ' + tagName.toLowerCase() + id + className + text;
-            logContent.innerHTML = message + '<br>' + logContent.innerHTML;
-            if (logContent.children.length > 10) {
-                logContent.removeChild(logContent.lastChild);
-            }
-        }
-    });
-    
-    console.log('✅ Event logger added to page');
-    
-    // ==========================================
-    // MAKE ORIGINAL FUNCTIONS WORK
-    // ==========================================
-    
-    // Ensure original functions are available globally
-    window.greetUser = function() {
-        var nameInput = document.getElementById('nameInput');
-        var greeting = document.getElementById('greeting');
-        if (nameInput && greeting) {
-            var name = nameInput.value || 'Guest';
-            greeting.innerHTML = 'Welcome ' + name + '! Thanks for visiting this JavaScript presentation. 🎉';
-        }
-    };
-    
-    window.calculate = function() {
-        var num1 = Number(document.getElementById('num1').value);
-        var num2 = Number(document.getElementById('num2').value);
-        var answer = document.getElementById('answer');
-        if (answer) {
-            answer.innerHTML = '✅ Sum = ' + (num1 + num2);
-        }
-    };
-    
-    window.showTime = function() {
-        var timeDiv = document.getElementById('time');
-        if (timeDiv) {
-            var now = new Date();
-            timeDiv.innerHTML = now.toLocaleString('en-US', {
-                weekday: 'long',
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit'
-            });
-        }
-    };
-    
-    // ==========================================
-    // FINAL SUMMARY
-    // ==========================================
-    
-    console.log('=== SUMMARY ===');
-    console.log('✅ DOM Selectors demonstrated');
-    console.log('✅ DOM Events demonstrated');
-    console.log('✅ Callback Functions demonstrated');
-    console.log('✅ All features working with existing HTML');
-
 });
+
+// Global functions for the new buttons
+window.showSelectorDemo = function() {
+    var results = document.getElementById('selectorResults');
+    if (!results) return;
+    
+    // Using different DOM selectors
+    var byId = document.getElementById('variables');
+    var byQuery = document.querySelector('section');
+    var allSections = document.querySelectorAll('section');
+    var allButtons = document.querySelectorAll('button');
+    var firstButton = document.querySelector('button');
+    
+    results.innerHTML = `
+        <div style="background:white; padding:12px; border-radius:6px; border:1px solid #e2e8f0;">
+            <p><strong>📌 getElementById('variables'):</strong> Found element with ID "variables"</p>
+            <p><strong>📌 querySelector('section'):</strong> Found first section: "${byQuery ? byQuery.querySelector('h2')?.textContent || 'Section' : 'Not found'}"</p>
+            <p><strong>📌 querySelectorAll('section'):</strong> Found ${allSections.length} sections</p>
+            <p><strong>📌 querySelectorAll('button'):</strong> Found ${allButtons.length} buttons</p>
+            <p><strong>📌 querySelector('button'):</strong> Found first button: "${firstButton ? firstButton.textContent.trim() : 'Not found'}"</p>
+        </div>
+    `;
+};
+
+window.highlightSections = function() {
+    var sections = document.querySelectorAll('section');
+    sections.forEach(function(section) {
+        section.classList.add('section-highlight');
+    });
+    var results = document.getElementById('selectorResults');
+    if (results) {
+        results.innerHTML = `<p style="color:#16a34a;">✅ Highlighted ${sections.length} sections using querySelectorAll('section')</p>`;
+    }
+};
+
+window.clearHighlights = function() {
+    var sections = document.querySelectorAll('section');
+    sections.forEach(function(section) {
+        section.classList.remove('section-highlight');
+    });
+    var results = document.getElementById('selectorResults');
+    if (results) {
+        results.innerHTML = `<p style="color:#475569;">🧹 Highlights cleared</p>`;
+    }
+};
+
+// ==========================================
+// ADD DOM EVENTS DEMO
+// ==========================================
+
+document.addEventListener('DOMContentLoaded', function() {
+    
+    // Create events section
+    var eventsSection = document.createElement('section');
+    eventsSection.innerHTML = `
+        <h2>⚡ DOM Events Demonstration</h2>
+        <div style="padding:15px; background:#f8fafc; border-radius:8px;">
+            <div style="display:flex; flex-wrap:wrap; gap:10px; margin-bottom:15px;">
+                <button id="eventCounterBtn" style="padding:10px 20px; background:#2563eb; color:white; border:none; border-radius:6px; cursor:pointer;">
+                    Click Counter
+                </button>
+                <button id="colorChangeBtn" style="padding:10px 20px; background:#f59e0b; color:white; border:none; border-radius:6px; cursor:pointer;">
+                    Change Color
+                </button>
+                <button id="removeEventDemoBtn" style="padding:10px 20px; background:#dc2626; color:white; border:none; border-radius:6px; cursor:pointer;">
+                    Remove Event
+                </button>
+                <button id="addEventDemoBtn" style="padding:10px 20px; background:#16a34a; color:white; border:none; border-radius:6px; cursor:pointer;">
+                    Re-add Event
+                </button>
+            </div>
+            <div id="eventDemoOutput" style="padding:12px; background:white; border-radius:6px; border:1px solid #e2e8f0;">
+                <p id="clickDisplay">Clicks: 0</p>
+                <p id="eventStatusDisplay" style="color:#16a34a;">✅ Event Active</p>
+            </div>
+        </div>
+    `;
+    
+    // Insert after selector section or at the end
+    var sections = document.querySelectorAll('section');
+    var lastSection = sections[sections.length - 1];
+    if (lastSection) {
+        lastSection.insertAdjacentElement('afterend', eventsSection);
+    }
+    
+    // Add event listeners
+    var clickCount = 0;
+    var clickDisplay = document.getElementById('clickDisplay');
+    var statusDisplay = document.getElementById('eventStatusDisplay');
+    var counterBtn = document.getElementById('eventCounterBtn');
+    var colorBtn = document.getElementById('colorChangeBtn');
+    var removeBtn = document.getElementById('removeEventDemoBtn');
+    var addBtn = document.getElementById('addEventDemoBtn');
+    
+    // The callback function
+    function handleCounterClick() {
+        clickCount++;
+        if (clickDisplay) {
+            clickDisplay.textContent = 'Clicks: ' + clickCount;
+        }
+        // Visual feedback
+        counterBtn.style.transform = 'scale(0.95)';
+        setTimeout(function() {
+            counterBtn.style.transform = 'scale(1)';
+        }, 150);
+    }
+    
+    // Add event
+    if (counterBtn) {
+        counterBtn.addEventListener('click', handleCounterClick);
+    }
+    
+    // Color change event
+    if (colorBtn) {
+        colorBtn.addEventListener('click', function() {
+            var colors = ['#dbeafe', '#fce7f3', '#d1fae5', '#fef3c7', '#ede9fe', '#fecaca'];
+            var randomColor = colors[Math.floor(Math.random() * colors.length)];
+            document.querySelector('main').style.backgroundColor = randomColor;
+        });
+    }
+    
+    // Remove event
+    if (removeBtn) {
+        removeBtn.addEventListener('click', function() {
+            if (counterBtn) {
+                counterBtn.removeEventListener('click', handleCounterClick);
+                if (statusDisplay) {
+                    statusDisplay.textContent = '⛔ Event Removed';
+                    statusDisplay.style.color = '#dc2626';
+                }
+            }
+        });
+    }
+    
+    // Re-add event
+    if (addBtn) {
+        addBtn.addEventListener('click', function() {
+            if (counterBtn) {
+                counterBtn.removeEventListener('click', handleCounterClick);
+                counterBtn.addEventListener('click', handleCounterClick);
+                if (statusDisplay) {
+                    statusDisplay.textContent = '✅ Event Active';
+                    statusDisplay.style.color = '#16a34a';
+                }
+            }
+        });
+    }
+});
+
+// ==========================================
+// ADD CALLBACK FUNCTIONS DEMO
+// ==========================================
+
+document.addEventListener('DOMContentLoaded', function() {
+    
+    // Create callback section
+    var callbackSection = document.createElement('section');
+    callbackSection.innerHTML = `
+        <h2>🔄 Callback Functions Demonstration</h2>
+        <div style="padding:15px; background:#f8fafc; border-radius:8px;">
+            <div style="display:flex; flex-wrap:wrap; gap:10px; margin-bottom:15px;">
+                <input type="text" id="callbackInput" placeholder="Type something..." style="padding:8px 12px; border:2px solid #e2e8f0; border-radius:6px; flex:1; min-width:200px;">
+                <button id="callbackDemoBtn" style="padding:10px 20px; background:#7c3aed; color:white; border:none; border-radius:6px; cursor:pointer;">
+                    Process with Callback
+                </button>
+            </div>
+            <div id="callbackOutput" style="padding:12px; background:white; border-radius:6px; border:1px solid #e2e8f0; min-height:50px;">
+                <p style="color:#64748b;">Result will appear here...</p>
+            </div>
+            <div style="margin-top:10px; padding:10px; background:#f0fdf4; border-radius:6px; border-left:4px solid #16a34a;">
+                <p><strong>💡 Callback Examples:</strong></p>
+                <button onclick="demoSetTimeout()" style="padding:6px 12px; background:#2563eb; color:white; border:none; border-radius:4px; cursor:pointer; margin:3px;">
+                    setTimeout Callback
+                </button>
+                <button onclick="demoForEach()" style="padding:6px 12px; background:#7c3aed; color:white; border:none; border-radius:4px; cursor:pointer; margin:3px;">
+                    forEach Callback
+                </button>
+                <button onclick="demoCustomCallback()" style="padding:6px 12px; background:#16a34a; color:white; border:none; border-radius:4px; cursor:pointer; margin:3px;">
+                    Custom Callback
+                </button>
+                <div id="callbackResultDisplay" style="margin-top:10px; padding:10px; background:white; border-radius:6px; border:1px solid #e2e8f0; min-height:30px;">
+                    <p style="color:#64748b;">Callback results will appear here...</p>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    // Insert after events section
+    var eventsSection = document.querySelector('section:last-of-type');
+    if (eventsSection) {
+        // Find the events section by checking if it has the events content
+        var allSections = document.querySelectorAll('section');
+        var lastSection = allSections[allSections.length - 1];
+        if (lastSection) {
+            lastSection.insertAdjacentElement('afterend', callbackSection);
+        }
+    }
+    
+    // Callback function to process input
+    function processText(input) {
+        if (!input || input.trim() === '') {
+            return '⚠️ Please enter some text';
+        }
+        var trimmed = input.trim();
+        var upper = trimmed.toUpperCase();
+        var reversed = trimmed.split('').reverse().join('');
+        var wordCount = trimmed.split(/\s+/).length;
+        return '📝 "' + trimmed + '" → UPPER: ' + upper + ' | Reversed: ' + reversed + ' | Words: ' + wordCount;
+    }
+    
+    // Handle callback button click
+    var callbackBtn = document.getElementById('callbackDemoBtn');
+    var callbackInput = document.getElementById('callbackInput');
+    var callbackOutput = document.getElementById('callbackOutput');
+    
+    if (callbackBtn && callbackInput && callbackOutput) {
+        callbackBtn.addEventListener('click', function() {
+            var input = callbackInput.value;
+            var result = processText(input);
+            callbackOutput.innerHTML = '<p style="color:#1e293b;">' + result + '</p>';
+        });
+        
+        // Also trigger on Enter key
+        callbackInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                var input = callbackInput.value;
+                var result = processText(input);
+                callbackOutput.innerHTML = '<p style="color:#1e293b;">' + result + '</p>';
+            }
+        });
+    }
+});
+
+// ==========================================
+// GLOBAL CALLBACK DEMO FUNCTIONS
+// ==========================================
+
+window.demoSetTimeout = function() {
+    var display = document.getElementById('callbackResultDisplay');
+    if (display) {
+        display.innerHTML = '<p style="color:#f59e0b;">⏳ Waiting 2 seconds for callback...</p>';
+        setTimeout(function() {
+            display.innerHTML = '<p style="color:#16a34a;">✅ setTimeout callback executed at: ' + new Date().toLocaleTimeString() + '</p>';
+        }, 2000);
+    }
+};
+
+window.demoForEach = function() {
+    var display = document.getElementById('callbackResultDisplay');
+    if (display) {
+        var items = ['DOM', 'Events', 'Callbacks', 'Selectors'];
+        var output = '<p><strong>forEach callback results:</strong></p><ul style="list-style:none; padding:0;">';
+        items.forEach(function(item, index) {
+            output += '<li style="padding:3px 0;">' + (index + 1) + '. ' + item + '</li>';
+        });
+        output += '</ul>';
+        display.innerHTML = output;
+    }
+};
+
+window.demoCustomCallback = function() {
+    var display = document.getElementById('callbackResultDisplay');
+    if (display) {
+        // Higher-order function
+        function processData(data, callback) {
+            return callback(data);
+        }
+        
+        // Callback function
+        function transformData(data) {
+            return '🔹 Transformed: ' + data.toUpperCase() + ' (length: ' + data.length + ')';
+        }
+        
+        var result = processData('javascript callback', transformData);
+        display.innerHTML = '<p style="color:#7c3aed;">✅ Custom callback result: ' + result + '</p>';
+    }
+};
+
+// ==========================================
+// LOG TO CONSOLE
+// ==========================================
+
+console.log('✅ All JavaScript features loaded successfully!');
+console.log('📌 DOM Selectors: getElementById, querySelector, querySelectorAll');
+console.log('📌 DOM Events: addEventListener, removeEventListener');
+console.log('📌 Callback Functions: setTimeout, forEach, custom callbacks');
