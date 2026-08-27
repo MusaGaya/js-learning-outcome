@@ -204,6 +204,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Create selector demo section
     var selectorDemoSection = document.createElement('section');
+    selectorDemoSection.id = 'selectorDemoSection';
     selectorDemoSection.innerHTML = 
         '<h2>🔍 DOM Selectors Interactive Demo</h2>' +
         '<p class="section-desc">Click buttons to see DOM selectors in action</p>' +
@@ -233,56 +234,82 @@ document.addEventListener('DOMContentLoaded', function() {
         '.section-highlight { border: 3px solid #2563eb !important; background: #dbeafe !important; transition: all 0.3s ease; }';
     document.head.appendChild(styleTag);
     
-    // Add event listeners for selector demo
-    var selectorOutput = document.getElementById('selectorOutput');
+    // ==========================================
+    // ADD EVENT LISTENERS FOR SELECTOR DEMO
+    // ==========================================
     
-    document.getElementById('highlightAllBtn').addEventListener('click', function() {
-        var allSections = document.querySelectorAll('section');
-        for (var i = 0; i < allSections.length; i++) {
-            allSections[i].classList.add('section-highlight');
-        }
-        selectorOutput.innerHTML = '✅ Selected ' + allSections.length + ' sections using <code>querySelectorAll("section")</code>';
-        console.log('Highlighted all ' + allSections.length + ' sections');
-    });
-    
-    document.getElementById('highlightFirstBtn').addEventListener('click', function() {
-        var firstSection = document.querySelector('section');
-        // Remove highlights first
-        var allSections = document.querySelectorAll('section');
-        for (var i = 0; i < allSections.length; i++) {
-            allSections[i].classList.remove('section-highlight');
-        }
-        if (firstSection) {
-            firstSection.classList.add('section-highlight');
-            var sectionTitle = firstSection.querySelector('h2');
-            var titleText = sectionTitle ? sectionTitle.textContent : 'First';
-            selectorOutput.innerHTML = '🔹 Selected first section using <code>querySelector("section")</code>: "' + titleText + '"';
-            console.log('Highlighted first section: ' + titleText);
-        }
-    });
-    
-    document.getElementById('countSectionsBtn').addEventListener('click', function() {
-        var allSections = document.querySelectorAll('section');
-        var totalElements = document.querySelectorAll('*').length;
-        var totalButtons = document.querySelectorAll('button').length;
-        var totalInputs = document.querySelectorAll('input').length;
+    // Use event delegation to handle clicks on dynamically created buttons
+    document.addEventListener('click', function(e) {
+        var target = e.target;
         
-        selectorOutput.innerHTML = 
-            '📊 Statistics:<br>' +
-            '• Sections: ' + allSections.length + ' (using <code>querySelectorAll</code>)<br>' +
-            '• Total elements: ' + totalElements + ' (using <code>querySelectorAll("*")</code>)<br>' +
-            '• Buttons: ' + totalButtons + ' (using <code>querySelectorAll("button")</code>)<br>' +
-            '• Inputs: ' + totalInputs + ' (using <code>querySelectorAll("input")</code>)';
-        console.log('Page statistics: Sections=' + allSections.length + ', Elements=' + totalElements);
-    });
-    
-    document.getElementById('clearHighlightsBtn').addEventListener('click', function() {
-        var allSections = document.querySelectorAll('section');
-        for (var i = 0; i < allSections.length; i++) {
-            allSections[i].classList.remove('section-highlight');
+        // Handle Highlight All Sections button
+        if (target.id === 'highlightAllBtn') {
+            var allSections = document.querySelectorAll('section');
+            for (var i = 0; i < allSections.length; i++) {
+                allSections[i].classList.add('section-highlight');
+            }
+            var output = document.getElementById('selectorOutput');
+            if (output) {
+                output.innerHTML = '✅ Selected ' + allSections.length + ' sections using <code>querySelectorAll("section")</code>';
+            }
+            console.log('Highlighted all ' + allSections.length + ' sections');
+            e.preventDefault();
         }
-        selectorOutput.innerHTML = '🧹 Highlights cleared';
-        console.log('Cleared all highlights');
+        
+        // Handle Highlight First Section button
+        if (target.id === 'highlightFirstBtn') {
+            var firstSection = document.querySelector('section');
+            // Remove highlights first
+            var allSections = document.querySelectorAll('section');
+            for (var i = 0; i < allSections.length; i++) {
+                allSections[i].classList.remove('section-highlight');
+            }
+            if (firstSection) {
+                firstSection.classList.add('section-highlight');
+                var sectionTitle = firstSection.querySelector('h2');
+                var titleText = sectionTitle ? sectionTitle.textContent : 'First';
+                var output = document.getElementById('selectorOutput');
+                if (output) {
+                    output.innerHTML = '🔹 Selected first section using <code>querySelector("section")</code>: "' + titleText + '"';
+                }
+                console.log('Highlighted first section: ' + titleText);
+            }
+            e.preventDefault();
+        }
+        
+        // Handle Count Sections button
+        if (target.id === 'countSectionsBtn') {
+            var allSections = document.querySelectorAll('section');
+            var totalElements = document.querySelectorAll('*').length;
+            var totalButtons = document.querySelectorAll('button').length;
+            var totalInputs = document.querySelectorAll('input').length;
+            
+            var output = document.getElementById('selectorOutput');
+            if (output) {
+                output.innerHTML = 
+                    '📊 Statistics:<br>' +
+                    '• Sections: ' + allSections.length + ' (using <code>querySelectorAll</code>)<br>' +
+                    '• Total elements: ' + totalElements + ' (using <code>querySelectorAll("*")</code>)<br>' +
+                    '• Buttons: ' + totalButtons + ' (using <code>querySelectorAll("button")</code>)<br>' +
+                    '• Inputs: ' + totalInputs + ' (using <code>querySelectorAll("input")</code>)';
+            }
+            console.log('Page statistics: Sections=' + allSections.length + ', Elements=' + totalElements);
+            e.preventDefault();
+        }
+        
+        // Handle Clear Highlights button
+        if (target.id === 'clearHighlightsBtn') {
+            var allSections = document.querySelectorAll('section');
+            for (var i = 0; i < allSections.length; i++) {
+                allSections[i].classList.remove('section-highlight');
+            }
+            var output = document.getElementById('selectorOutput');
+            if (output) {
+                output.innerHTML = '🧹 Highlights cleared';
+            }
+            console.log('Cleared all highlights');
+            e.preventDefault();
+        }
     });
     
     // ==========================================
@@ -328,6 +355,45 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     console.log('✅ Event logger added to page');
+    
+    // ==========================================
+    // MAKE ORIGINAL FUNCTIONS WORK
+    // ==========================================
+    
+    // Ensure original functions are available globally
+    window.greetUser = function() {
+        var nameInput = document.getElementById('nameInput');
+        var greeting = document.getElementById('greeting');
+        if (nameInput && greeting) {
+            var name = nameInput.value || 'Guest';
+            greeting.innerHTML = 'Welcome ' + name + '! Thanks for visiting this JavaScript presentation. 🎉';
+        }
+    };
+    
+    window.calculate = function() {
+        var num1 = Number(document.getElementById('num1').value);
+        var num2 = Number(document.getElementById('num2').value);
+        var answer = document.getElementById('answer');
+        if (answer) {
+            answer.innerHTML = '✅ Sum = ' + (num1 + num2);
+        }
+    };
+    
+    window.showTime = function() {
+        var timeDiv = document.getElementById('time');
+        if (timeDiv) {
+            var now = new Date();
+            timeDiv.innerHTML = now.toLocaleString('en-US', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+        }
+    };
     
     // ==========================================
     // FINAL SUMMARY
